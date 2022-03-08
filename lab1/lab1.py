@@ -2,31 +2,33 @@ from math import ceil
 import random
 
 
-def generateData(numberTraining, numberTesting):
+def generate_data(numberTraining, numberTesting):
     file = open("points_training.txt", "w")
     for i in range(numberTraining):
         point = [random.randint(-100, 100), random.randint(-100, 100)]
-        if(point[1] <= point[0] + 2):
+        if point[1] <= point[0] + 2:
             answer = 0
         else:
             answer = 1
-        file.writelines([str(point[0] )," ",  str(point[1] ) , " " ,str(answer),"\n"])
+        file.writelines([str(point[0]), " ", str(point[1]), " ", str(answer), "\n"])
     file.close()
 
     file = open("points_testing.txt", "w")
     for i in range(numberTesting):
         point = [random.randint(-100, 100), random.randint(-100, 100)]
-        if(point[1] <= point[0] + 2):
+        if point[1] <= point[0] + 2:
             answer = 0
         else:
             answer = 1
-        file.writelines([str(point[0] )," ",  str(point[1] ) , " " ,str(answer),"\n"])
+        file.writelines([str(point[0]), " ", str(point[1]), " ", str(answer), "\n"])
     file.close()
+
 
 def adjust(w, d, y, theta, u):
     return w + (d - y) * u * theta
 
-def trainingModel(theta):
+
+def training_model(theta):
     w = [0, 0]
     file = open("points_training.txt", "r")
     for line in file:
@@ -41,6 +43,7 @@ def trainingModel(theta):
     file.close()
     return w
 
+
 def test(w):
     file = open("points_testing.txt", "r")
     count = 0
@@ -54,12 +57,12 @@ def test(w):
     file.close()
     return count
 
+
 if __name__ == '__main__':
     numberTraining = 100
     numberTesting = 1000
     theta = 0.3
-    generateData(numberTraining, numberTesting)
-    w = trainingModel(theta)
+    generate_data(numberTraining, numberTesting)
+    w = training_model(theta)
     answer = test(w)
     print(answer, answer / numberTesting, "%")
-
